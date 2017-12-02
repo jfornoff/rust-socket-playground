@@ -1,6 +1,6 @@
-use std::net::{TcpListener, TcpStream};
-use std::os::unix::io::AsRawFd;
 extern crate nix;
+use std::net::{TcpListener, TcpStream};
+use std::os::unix::io::{AsRawFd, RawFd};
 use nix::sys::socket;
 
 fn main() {
@@ -19,14 +19,14 @@ fn main() {
 
 fn output_info(stream: TcpStream) {
     println!(
-        "Local address: {:?}",
+        "### Local address:\n {:?}",
         stream.local_addr().expect(
             "Didn't get the local address :-(",
         )
     );
 
     println!(
-        "Remote address: {:?}",
+        "### Remote address:\n {:?}",
         stream.peer_addr().expect(
             "Didn't get the remote address :-(",
         )
@@ -34,8 +34,12 @@ fn output_info(stream: TcpStream) {
 
     println!("File descriptor {:?}", stream.as_raw_fd());
     println!(
-        "Send buffer size: {:?}",
+        "### Send buffer size:\n {:?}",
         socket::getsockopt(stream.as_raw_fd(), socket::sockopt::SndBuf).unwrap()
     );
 
+    println!(
+        "### TCP Info:\n {:#?}",
+        socket::getsockopt(stream.as_raw_fd(), socket::sockopt::TcpInfo).unwrap()
+    );
 }

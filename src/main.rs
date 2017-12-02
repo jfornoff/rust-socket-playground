@@ -1,5 +1,7 @@
 use std::net::{TcpListener, TcpStream};
 use std::os::unix::io::AsRawFd;
+extern crate nix;
+use nix::sys::socket;
 
 fn main() {
     let listener = TcpListener::bind("0.0.0.0:80").unwrap();
@@ -31,4 +33,9 @@ fn output_info(stream: TcpStream) {
     );
 
     println!("File descriptor {:?}", stream.as_raw_fd());
+    println!(
+        "Send buffer size: {:?}",
+        socket::getsockopt(stream.as_raw_fd(), socket::sockopt::SndBuf).unwrap()
+    );
+
 }

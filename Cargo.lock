@@ -1,6 +1,6 @@
 [[package]]
 name = "bitflags"
-version = "0.9.1"
+version = "1.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
@@ -11,14 +11,14 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 [[package]]
 name = "libc"
 version = "0.2.34"
-source = "git+https://github.com/rust-lang/libc#7c1297c9a14deb5df62b21804fdb840ea09893f3"
+source = "git+https://github.com/rust-lang/libc#b080eb5c3a2299575a3bf9960af797fadf1d3a84"
 
 [[package]]
 name = "nix"
 version = "0.10.0-pre"
-source = "git+https://github.com/jfornoff/nix#f4841bfc586d5b2b25be2d2c97ae92a700c24765"
+source = "git+https://github.com/jfornoff/nix#c757ecc478c41a25b47bb8abb7ed9f9d8f2b2766"
 dependencies = [
- "bitflags 0.9.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "bitflags 1.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "cfg-if 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "libc 0.2.34 (git+https://github.com/rust-lang/libc)",
  "void 1.0.2 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -37,7 +37,7 @@ version = "1.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [metadata]
-"checksum bitflags 0.9.1 (registry+https://github.com/rust-lang/crates.io-index)" = "4efd02e230a02e18f92fc2735f44597385ed02ad8f831e7c1c1156ee5e1ab3a5"
+"checksum bitflags 1.0.1 (registry+https://github.com/rust-lang/crates.io-index)" = "b3c30d3802dfb7281680d6285f2ccdaa8c2d8fee41f93805dba5c4cf50dc23cf"
 "checksum cfg-if 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)" = "d4c819a1287eb618df47cc647173c5c4c66ba19d888a6e50d605672aed3140de"
 "checksum libc 0.2.34 (git+https://github.com/rust-lang/libc)" = "<none>"
 "checksum nix 0.10.0-pre (git+https://github.com/jfornoff/nix)" = "<none>"

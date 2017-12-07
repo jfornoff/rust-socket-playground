@@ -4,4 +4,5 @@ version = "0.1.0"
 authors = ["Jan Fornoff <jan.fornoff@grandcentrix.net>"]
 
 [dependencies]
-nix={git = "https://github.com/jfornoff/nix"}
+nix={git = "https://github.com/jfornoff/nix.git"}
+net2="0.2.31"

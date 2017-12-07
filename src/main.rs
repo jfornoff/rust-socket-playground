@@ -1,10 +1,26 @@
 extern crate nix;
+extern crate net2;
 use std::net::{TcpListener, TcpStream};
 use std::os::unix::io::{AsRawFd, RawFd};
 use nix::sys::socket;
+use net2::TcpBuilder;
 
 fn main() {
-    let listener = TcpListener::bind("0.0.0.0:80").unwrap();
+    let unbound_socket = TcpBuilder::new_v4().unwrap();
+    println!(
+        "### MPTCP Enabled:\n {:#?}",
+        socket::getsockopt(unbound_socket.as_raw_fd(), socket::sockopt::MptcpEnabled).unwrap()
+    );
+
+    let result = socket::setsockopt(unbound_socket.as_raw_fd(), socket::sockopt::MptcpEnabled, &true);
+    println!("### Setting: {:?}", result);
+
+    println!(
+        "### MPTCP Enabled:\n {:#?}",
+        socket::getsockopt(unbound_socket.as_raw_fd(), socket::sockopt::MptcpEnabled).unwrap()
+    );
+
+    let listener = unbound_socket.bind("0.0.0.0:80").expect("Failed to bind").listen(5000).expect("Failed to start listening");
 
     for stream in listener.incoming() {
         match stream {
@@ -12,14 +28,12 @@ fn main() {
                 println!("NEW CONNECTION");
                 output_info(stream)
             }
-            Err(_e) => println!("We dun goofd :-("),
+            Err(e) => println!("{:?}", e),
         }
     }
 }
 
 fn output_info(stream: TcpStream) {
-    socket::setsockopt(stream.as_raw_fd(), socket::sockopt::MptcpEnabled, &true).expect("didn't set MPTCP_ENABLED");
-
     println!(
         "### Local address:\n {:?}",
         stream.local_addr().expect(

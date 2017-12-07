@@ -18,6 +18,8 @@ fn main() {
 }
 
 fn output_info(stream: TcpStream) {
+    socket::setsockopt(stream.as_raw_fd(), socket::sockopt::MptcpEnabled, &true).expect("didn't set MPTCP_ENABLED");
+
     println!(
         "### Local address:\n {:?}",
         stream.local_addr().expect(
@@ -41,5 +43,10 @@ fn output_info(stream: TcpStream) {
     println!(
         "### TCP Info:\n {:#?}",
         socket::getsockopt(stream.as_raw_fd(), socket::sockopt::TcpInfo).unwrap()
+    );
+
+    println!(
+        "### MPTCP Enabled:\n {:#?}",
+        socket::getsockopt(stream.as_raw_fd(), socket::sockopt::MptcpEnabled).unwrap()
     );
 }
